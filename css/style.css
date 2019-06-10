@@ -1,0 +1,85 @@
+:root {
+    --stockGreenColor: #00DE00;
+    --stockRedColor: #F50A28;
+}
+
+.stocks {
+    display: table;
+    font-family: sans-serif;
+    border-color: black;
+    width: 60%;
+    background-color: white;
+    color: black;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 16px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.stocks td {
+    border: 1px solid #929799;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 5px;
+}
+
+.stocks tr {
+    height: 23px;
+}
+
+.stocks tr:nth-child(odd) {
+    background-color: #c6fff4;
+}
+
+html, body {
+ height: 100%;
+}
+
+#login-body {
+    background-image: url("../img/stock_hero_mod.jpg");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#login-box {
+    width: 50%;
+    margin: auto;
+    font-family: sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1em;
+}
+
+#login-box a {
+    text-decoration: none;
+    color: rgb(172, 29, 29);
+}
+
+#login-box input {
+    margin-bottom: 1em;
+    border-radius: 2px;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#login-box input[type=submit] {
+    background-color: var(--stockGreenColor);
+    color: var(--stockRedColor);
+    cursor: pointer;
+}
+
+#login-box input[type=submit]:hover { 
+    color: yellow;
+}
+
+.register-info {
+    display: none;
+}
