@@ -34,6 +34,7 @@
 
 html, body {
  height: 100%;
+ font-family: sans-serif;
 }
 
 #login-body {
@@ -82,4 +83,109 @@ html, body {
 
 .register-info {
     display: none;
+}
+
+body header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    height: 2em;
+    background-color: black;
+    padding: 0.7em;
+}
+
+.red-text {
+    color: var(--stockRedColor);
+}
+
+.green-text {
+    color: var(--stockGreenColor);
+}
+
+.hover-yellow:hover {
+    color: yellow;
+}
+
+.logout-btn {
+    font-size: 1.2em;
+    color: orange;
+}
+
+header span {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: white;
+}
+
+header a {
+    text-decoration: none;
+}
+
+.header-space {
+    margin-left: 0.5em;
+}
+
+#heading-div {
+    width: 69%;
+    margin: auto;
+}
+
+#portfolio-container {
+    margin: auto;
+    width: 95%;
+    padding: 0.1em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#portfolio-cont {
+    width: 50%;
+    border-right: 3px solid black;
+    padding: 1%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#portfolio-cont p {
+    border-bottom: 2px solid black;
+    padding-bottom: 0.5em;
+}
+
+.port-push-right {
+    margin-right: 3.5em;
+}
+
+#stock-buy-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    padding: 0 1em;
+}
+
+#stock-buy-cont input {
+    font-size: 1em;
+    text-align: center;
+    border: 2px solid black;
+    margin-bottom: 1em;
+
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 5px;
+}
+
+#stock-buy-cont input[type=submit] {
+    background-color: #F50A28;
+    color: yellow;
+    cursor: pointer;
+}
+
+#stock-buy-cont input[type=submit]:hover {
+    background-color: var(--stockGreenColor);
 }
