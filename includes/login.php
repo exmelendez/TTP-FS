@@ -28,7 +28,6 @@ if (isset($_POST['login-submit'])) {
                 } else if($pwdCheck == true) {
                     session_start();
                     $_SESSION['userEmail'] = $row['email'];
-                    // $_SESSION['userUid'] = $row['uidUsers'];
                     header("Location: ../portfolio.php?login=success");
                     exit();
                 } else {
