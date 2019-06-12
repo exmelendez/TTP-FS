@@ -47,6 +47,10 @@
                     echo '<p class="login-signup-msg">db connection error!</p>';
                 } else if($_GET['error'] == "usertaken") {
                     echo '<p class="login-signup-msg">Email already in system!</p>';
+                } else if($_GET['error'] == "invalidpwd") {
+                    echo '<p class="login-signup-msg">Password Incorrect!</p>';
+                } else if($_GET['error'] == "nouser") {
+                    echo '<p class="login-signup-msg">No user with given email!</p>';
                 }
             } else if($_GET['signup'] == "success") {   
                 echo '<p class="login-signup-msg">Signup successful, you may now login!</p>';
