@@ -12,7 +12,7 @@
         <div id="login-box">
             <h1 class="login-info">IEX Trading Login</h1>
             <h1 class="register-info">IEX Trading Register</h1>
-            <form action="includes/signup.php" method="post">
+            <form id="login-form" action="includes/login.php" method="post">
 
                 <input class="register-info" name="register-name" type="text" placeholder="Full Name">
 
