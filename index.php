@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,30 +13,42 @@
         <link type="text/css" rel="stylesheet" href="css/style.css">
     </head>
     <body id="login-body">
-        <div id="login-box">
-            <h1 class="login-info">IEX Trading Login</h1>
-            <h1 class="register-info">IEX Trading Register</h1>
-            <form id="login-form" action="includes/login.php" method="post">
 
-                <input class="register-info" name="register-name" type="text" placeholder="Full Name">
+        <?php
+            error_reporting(0);
+            if($_SESSION['userEmail']) {
+                header("Location: portfolio.php");
+                exit();
+            } else {
+                echo '
+                <div id="login-box">
+                <h1 class="login-info">IEX Trading Login</h1>
+                <h1 class="register-info">IEX Trading Register</h1>
+                <form id="login-form" action="includes/login.php" method="post">
+    
+                    <input class="register-info" name="register-name" type="text" placeholder="Full Name">
+    
+                    <input name="email" type="email" placeholder="Email">
+    
+                    <input type="password" name="pwd" placeholder="Password">
+                    <input class="register-info" name="pwd-confirm" type="password" placeholder="Confirm Password">
+    
+                    <input id="login-submit" class="login-info" name="login-submit" type="submit" value="Login">
+                    <input id="register-submit" class="register-info" name="register-submit" type="submit" value="Register">
+                </form>
+    
+                <P class="login-info">
+                Not a member? It&#39;s free to <a id="register-btn" href="#">register</a>.
+                </P>
+    
+                <P class="register-info">
+                Already a member? Click to <a id="login-btn" href="#">login</a>.
+                </P>
+            </div>';
+            }
+        ?>
 
-                <input name="email" type="email" placeholder="Email">
-
-                <input type="password" name="pwd" placeholder="Password">
-                <input class="register-info" name="pwd-confirm" type="password" placeholder="Confirm Password">
-
-                <input id="login-submit" class="login-info" name="login-submit" type="submit" value="Login">
-                <input id="register-submit" class="register-info" name="register-submit" type="submit" value="Register">
-            </form>
-
-            <P class="login-info">
-            Not a member? It's free to <a id="register-btn" href="#">register</a>.
-            </P>
-
-            <P class="register-info">
-            Already a member? Click to <a id="login-btn" href="#">login</a>.
-            </P>
-        </div>
+        
 
         <?php
             error_reporting(0);

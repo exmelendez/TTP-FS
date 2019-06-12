@@ -1,5 +1,11 @@
 <?php
     session_start();
+    error_reporting(0);
+
+    if(!$_SESSION['userEmail']) {
+        header("Location: index.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,9 +21,9 @@
     </head>
     <body>
         <header>
-            <a class="header-space green-text hover-yellow" href="portfolio.html">Portfolio</a>
+            <a class="header-space green-text hover-yellow" href="portfolio.php">Portfolio</a>
             <span class="header-space">|</span>
-            <a class="header-space red-text hover-yellow" href="transactions.html">Transactions</a>
+            <a class="header-space red-text hover-yellow" href="transactions.php">Transactions</a>
            
             <form id="logout-form" action="includes/logout.php">
                 <label for="logout-btn">
