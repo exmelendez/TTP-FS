@@ -125,11 +125,6 @@ body header {
     color: yellow;
 }
 
-.logout-btn {
-    font-size: 1.2em;
-    color: orange;
-}
-
 header span {
     font-weight: bold;
     font-size: 1.1em;
@@ -225,4 +220,16 @@ header a {
 
 .trans-push-right {
     margin-right: 0.4em;
+}
+
+#logout-form > input {
+    display: none;
+}
+
+#logout-form i {
+    cursor: pointer;
+    color: white;
+    margin-left: 0.5em;
+    font-size: 1.2em;
+    color: orange;
 }

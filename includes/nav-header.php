@@ -18,5 +18,11 @@
             <a class="header-space green-text hover-yellow" href="portfolio.html">Portfolio</a>
             <span class="header-space">|</span>
             <a class="header-space red-text hover-yellow" href="transactions.html">Transactions</a>
-            <a class="header-space hover-yellow logout-btn" href="#"><i title="Signout" class="fas fa-ban"></i></a>
+           
+            <form id="logout-form" action="includes/logout.php">
+                <label for="logout-btn">
+                    <i title="Signout" class="fas fa-ban"></i>
+                </label>
+                <input id="logout-btn" type="submit"/>
+            </form>
         </header>
