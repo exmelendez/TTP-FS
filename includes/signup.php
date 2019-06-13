@@ -21,7 +21,7 @@ if(isset($_POST['register-submit'])) {
         $stmt = mysqli_stmt_init($connection);
 
         if(!mysqli_stmt_prepare($stmt, $sql)) {
-            header("Location: ../index.php?error=sqlerror1");
+            header("Location: ../index.php?error=sqlerror");
             exit();
         } else {
             mysqli_stmt_bind_param($stmt, "s", $email);
@@ -39,13 +39,17 @@ if(isset($_POST['register-submit'])) {
                 $stmt = mysqli_stmt_init($connection);
 
                 if(!mysqli_stmt_prepare($stmt, $sql)) {
-                    header("Location: ../index.php?error=sqlerror2");
+                    header("Location: ../index.php?error=sqlerror");
                     exit();
                 } else {
                     $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
                     mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPwd);
                     mysqli_stmt_execute($stmt);
+
+                    $userPrimeId = getPrimaryId($connection, $email);
+                    moneyAcctSetup($connection, $userPrimeId);
+
                     header("Location: ../index.php?signup=success");
                     exit();
                 }
@@ -57,4 +61,20 @@ if(isset($_POST['register-submit'])) {
 } else {
     header("Location: ../index.php");
     exit();
+}
+
+function getPrimaryId($connection, $emailAdd) {
+    $sql = "SELECT * FROM users WHERE email ='".$emailAdd."';";
+    $searchResult = mysqli_query($connection, $sql);
+    $resultLength = mysqli_num_rows($searchResult);
+
+    if($resultLength > 0) {
+        $resultRow = mysqli_fetch_assoc($searchResult);
+        return $resultRow['primeId'];
+    }
+}
+
+function moneyAcctSetup($connection, $primId) {
+    $sql = "INSERT INTO moneyAcct (userId, transType, amount, balance) VALUES (".$primId.", 'D', 5000.00, 5000.00);";
+    mysqli_query($connection, $sql);
 }

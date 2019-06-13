@@ -15,7 +15,7 @@
     <body id="login-body">
 
         <?php
-            error_reporting(0);
+            // error_reporting(0);
             if($_SESSION['userEmail']) {
                 header("Location: portfolio.php");
                 exit();
@@ -51,7 +51,7 @@
         
 
         <?php
-            error_reporting(0);
+            // error_reporting(0);
             if(isset($_GET['error'])) {
                 if($_GET['error'] == "emptyfields") {
                     echo '<p class="login-signup-msg">Fill in all fields!</p>';
