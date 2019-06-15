@@ -202,6 +202,26 @@ header a {
     background-color: var(--stockGreenColor);
 }
 
+.symbol-reset {
+    cursor: pointer;
+}
+
+#buy-form-div {
+    display: none;
+    flex-direction: column;
+}
+
+#buy-form-div p {
+    display: inline-block;
+    text-align: center;
+}
+
+#buy-form-div form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #trans-container {
     margin: auto;
     width: 70%;
