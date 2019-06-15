@@ -1,8 +1,9 @@
 <?php
+    session_start();
+
 if(isset($_POST['buyBtn'])){
 
-    $searchInput = $_POST['symbol'];
-    $searchSymbol = strtoupper($searchInput);
+    $searchSymbol = strtoupper($_POST['symbol']);
 
     if(empty($searchSymbol)){
         header("Location: ../buy.php?error=emptyfields");
@@ -11,11 +12,14 @@ if(isset($_POST['buyBtn'])){
         header("Location: ../buy.php?error=symbolnotfound");
         exit();
     } else {
-        header("Location: ../buy.php?process=success");
+    getBalance();
+
+        header("Location: ../buy.php?process=success&email=".$_SESSION['userEmail']);
         exit();
     } 
 }
 else {
+
     header("Location: ../buy.php");
     exit();
 }
@@ -23,13 +27,17 @@ else {
 function symbolExists($input) {
     $content = file_get_contents("https://api.iextrading.com/1.0/ref-data/symbols");
     $data = json_decode($content, true);
-    $bool = false;
+    $symbolFound = false;
     
     foreach($data as $stock) {
         if($stock['symbol'] == $input){
-            $bool = true;
+            $symbolFound = true;
             break;
         }
     }
-    return $bool;
+    return $symbolFound;
+}
+
+function getBalance() {
+    echo $_SESSION['userEmail'];
 }
