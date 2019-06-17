@@ -1,3 +1,11 @@
+/*******
+ * 
+ * FILE NO LONGER IN USE ANYMORE
+ * KEEP FOR JS REFERENCE ON AJAX USE WITH
+ * XMLHttpRequest
+ * 
+ */
+
 const searchInput = document.getElementById("symbol-search-input");
 const symbolSearchBtn = document.getElementById("symbol-search-btn");
 const symbolSearchMsg = document.getElementById("symbol-status-msg");
@@ -45,6 +53,7 @@ const symbolFindProcess = (givenSymbol) => {
 
         document.getElementById("symbol-display").innerHTML = givenSymbol;
         document.getElementById("symbol-acrn").setAttribute("value", givenSymbol);
+        document.getElementById("price-cont").innerHTML = `<?php$stockPrice = getStockData("${givenSymbol}", "cost");echo "<p>".$stockPrice."</p>";?>`;
 
         searchInput.style.display = "none";
         symbolSearchBtn.style.display = "none";
@@ -59,14 +68,3 @@ const xhrProcess = (request) => {
     request.open('GET', 'https://api.iextrading.com/1.0/ref-data/symbols', true);
     request.send();
 };
-
-
-document.body.addEventListener('click', function (evt) {
-    if (evt.target.className === 'symbol-reset' || evt.target.className === 'fas fa-times-circle symbol-reset') {
-        searchInput.style.display = "block";
-        searchInput.value = "";
-        symbolSearchBtn.style.display = "block";
-        buyForm.style.display = "none";
-    }
-}, false);
-

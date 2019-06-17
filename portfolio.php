@@ -7,7 +7,7 @@
 </div>
         
 <div id="portfolio-container">
-    <div id="portfolio-cont">
+    <div id="current-stock-cont">
         <p>
             <span class="port-push-right">AAPL - 6 Shares</span>
             <span>$2043.09</span>
@@ -25,28 +25,40 @@
     </div>
 
     <div id="stock-buy-cont">
-        <h2>Cash - $5000.00</h2>
-        <input id="symbol-search-input" type="text" placeholder="Symbol">
-        <input id="symbol-search-btn" type="submit" value="Search">
-    
-        <div id="buy-form-div">
-            <p>
-                <span id="symbol-display" class="symbol-reset">AAPL</span>
-                <i class="fas fa-times-circle symbol-reset"></i>
-            </p> 
-            
-            <form> 
-                <input id="symbol-acrn" type="hidden" name="symbol" value="">       
-                <input type="text" placeholder="quantity">
-                <input type="submit" name="buyBtn" value="Buy">
-            </form>
-        </div>
+        <?php
+            require 'includes/userdata.php';
+            $userBalance = getUserBalance($_SESSION['userEmail']);
+            $searchForm = '<form action="includes/buy-form-setup.php" method="post">
+            <input type="text" name="symbol-search-input" placeholder="Symbol">
+            <input id="stock-search-submit" name="symbol-search-btn" type="submit" value="Search">
+        </form>';
+            echo '<h2>Balance - $'.$userBalance.'</h2>';
 
-        <p id="symbol-status-msg"></p>
+            if(isset($_GET['error'])) {
+                if($_GET['error'] == "emptyfield") {
+                    echo $searchForm.'<p>Symbol input is empty!</p>';
+                } else if($_GET['error'] == "symbolnotfound") {
+                    echo $searchForm.'<p>Symbol not found!</p>';
+                }
+            } else if(isset($_GET['symbolsearch']) == "success") {   
+
+                echo '<div><form action="includes/stock-buy.php" method="post"><input type="text" name="stock-symbol" value="'.$_GET['symbol'].'" disabled>
+                    <input type="text" name="stock-price" value="'.$_GET['price'].'" disabled>
+                    <!-- <input type="text" placeholder="quantity"> -->
+                    <input type="number" pattern="\d+" name="stock-qty" placeholder="quantity"><div>
+                    <input id="cancel-buy-btn" type="submit" name="cancelBuyBtn" value="Cancel">
+                    <input id="submit-buy-btn" type="submit" name="buyBtn" value="Buy">
+                    </div>
+                </form>
+            </div>';
+
+            } else {
+                echo $searchForm;
+            }
+        ?>
     </div>
-</div>
 
-<script src="js/symbol-find.js"></script>
+</div>
 
 <?php
     require "includes/footer.php";
