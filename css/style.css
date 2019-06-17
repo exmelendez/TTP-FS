@@ -144,6 +144,17 @@ header a {
     margin: auto;
 }
 
+/*************
+PORTFOLIO PAGE
+*****************/
+
+#current-stock-cont, #stock-buy-cont, #stock-buy-cont form {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
 #portfolio-container {
     margin: auto;
     width: 95%;
@@ -151,20 +162,16 @@ header a {
 
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
-#portfolio-cont {
+#current-stock-cont {
     width: 50%;
     border-right: 3px solid black;
     padding: 1%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-#portfolio-cont p {
+#current-stock-cont p {
     border-bottom: 2px solid black;
     padding-bottom: 0.5em;
 }
@@ -174,9 +181,6 @@ header a {
 }
 
 #stock-buy-cont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 50%;
     padding: 0 1em;
 }
@@ -192,34 +196,27 @@ header a {
     border-radius: 5px;
 }
 
-#stock-buy-cont input[type=submit] {
+#cancel-buy-btn, #stock-search-submit {
     background-color: #F50A28;
     color: yellow;
     cursor: pointer;
 }
 
-#stock-buy-cont input[type=submit]:hover {
-    background-color: var(--stockGreenColor);
-}
-
-.symbol-reset {
+#cancel-buy-btn:hover, #stock-search-submit:hover {
+    background-color: yellow;
+    color: #F50A28;
     cursor: pointer;
 }
 
-#buy-form-div {
-    display: none;
-    flex-direction: column;
+#submit-buy-btn {
+    background-color: green;
+    color: yellow;
+    cursor: pointer;
 }
-
-#buy-form-div p {
-    display: inline-block;
-    text-align: center;
-}
-
-#buy-form-div form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#submit-buy-btn:hover {
+    background-color: yellow;
+    color: green;
+    cursor: pointer;
 }
 
 #trans-container {

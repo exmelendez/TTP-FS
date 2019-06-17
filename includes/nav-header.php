@@ -1,6 +1,10 @@
 <?php
     session_start();
-    error_reporting(0);
+    require "api.stockinfo.php";
+    /******
+     * COMMENT BACK FOR FINAL PRODUCT
+     */
+    // error_reporting(0);
 
     if(!$_SESSION['userEmail']) {
         header("Location: index.php");
