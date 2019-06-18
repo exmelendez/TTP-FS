@@ -2,6 +2,7 @@
 
 if(isset($_POST['symbol-search-btn'])) {
     require 'api.stockinfo.php';
+    $userEmail = $_POST['user-email'];
     $symbolInput = $_POST['symbol-search-input'];
 
     if(empty($symbolInput)){
