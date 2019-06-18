@@ -1,30 +1,42 @@
 <?php
 
-if(isset($_POST['symbol-search-btn'])) {
-    /*
+if(isset($_POST['buyBtn'])) {
     require 'api.stockinfo.php';
-    $symbolInput = $_POST['symbol-search-input'];
 
-    if(empty($symbolInput)){
-        header("Location: ../port2.php?error=emptyfield");
-        exit();
-    } else {
-        strtoupper($symbolInput);
-        $statusMsg = getStockData($symbolInput, "exist");
+    $userEmail = $_POST['user-email'];
+    $symbol = $_POST['stock-symbol'];
+    $price = $_POST['stock-price'];
+    $qty = $_POST['stock-qty'];
 
-        if($statusMsg == "found") {
-            $symbol = getStockData($symbolInput, "symbol");
-            $price = getStockData($symbolInput, "cost");
+    if(getStockData($symbol, "exist") == "found") {
+        require 'userdata.php';
+        $userId = getUserId($userEmail);
+        $stockOwned = stockOwnCheck($userEmail, $symbol);
 
-            header("Location: ../port2.php?symbolsearch=success&symbol=".$symbol."&price=".$price);
+        if(balancePurchaseCheck($userEmail, $qty, $price) == "funding") {
+
+            if($stockOwned == "false") {
+                buyStock($userId, $userEmail, $symbol, $qty, $price);
+                header("Location: ../portfolio.php?purchase=success");
+                exit();
+            } else if($stockOwned == "true") {
+                additionalStockBuy($userEmail, $qty, $symbol, $price);
+                
+                header("Location: ../portfolio.php?purchase=success");
+                exit();
+            }
+
+        } else if(balancePurchaseCheck($userEmail, $qty, $price) == "no funding") {
+            header("Location: ../portfolio.php?error=unavailablefunds");
             exit();
-        } else {
-            header("Location: ../port2.php?error=symbolnotfound");
-        exit();
         }
-    }
-    */
-} else if(isset($_POST['cancelBuyBtn'])) {
-    header("Location: ../port2.php");
+
+    } else {
+        header("Location: ../portfolio.php?error=symbolnotfound");
         exit();
+    }
+
+} else if(isset($_POST['cancelBuyBtn'])) {
+    header("Location: ../portfolio.php");
+    exit();
 }

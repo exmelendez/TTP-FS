@@ -1,6 +1,7 @@
 <?php
 if(isset($_POST['register-submit'])) {
     require 'db.inc.php';
+    require 'userdata.php';
 
     $name = $_POST['register-name'];
     $email = $_POST['email'];
@@ -47,8 +48,8 @@ if(isset($_POST['register-submit'])) {
                     mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPwd);
                     mysqli_stmt_execute($stmt);
 
-                    $userPrimeId = getPrimaryId($connection, $email);
-                    moneyAcctSetup($connection, $userPrimeId);
+                    $userId = getUserId($email);
+                    moneyAcctSetup($userId);
 
                     header("Location: ../index.php?signup=success");
                     exit();
@@ -61,20 +62,4 @@ if(isset($_POST['register-submit'])) {
 } else {
     header("Location: ../index.php");
     exit();
-}
-
-function getPrimaryId($connection, $emailAdd) {
-    $sql = "SELECT * FROM users WHERE email ='".$emailAdd."';";
-    $searchResult = mysqli_query($connection, $sql);
-    $resultLength = mysqli_num_rows($searchResult);
-
-    if($resultLength > 0) {
-        $resultRow = mysqli_fetch_assoc($searchResult);
-        return $resultRow['primeId'];
-    }
-}
-
-function moneyAcctSetup($connection, $primId) {
-    $sql = "INSERT INTO moneyAcct (userId, transType, amount, balance) VALUES (".$primId.", 'D', 5000.00, 5000.00);";
-    mysqli_query($connection, $sql);
 }

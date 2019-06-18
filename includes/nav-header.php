@@ -1,6 +1,5 @@
 <?php
     session_start();
-    require "api.stockinfo.php";
     /******
      * COMMENT BACK FOR FINAL PRODUCT
      */
