@@ -92,7 +92,7 @@ function getStockTrans($email) {
 
     $userId = getUserId($email);
 
-    $sql = "SELECT * FROM stockTrans WHERE userId =".$userId." ORDER BY transDate ASC;";
+    $sql = "SELECT * FROM stockTrans WHERE userId =".$userId." ORDER BY transDate DESC;";
 
     $result = mysqli_query($connection, $sql);
     $resultLength = mysqli_num_rows($result);
