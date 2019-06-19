@@ -5,21 +5,28 @@
 <div id="trans-container">
     <h1>Transactions</h1>
 
-    <p>
-        <span class="trans-push-right">STWD - 40 Shares</span>
-        <span class="trans-push-right">@</span>
-        <span class="trans-push-right">$143.65 ea. ($5746.00)</span>
-        <span class="trans-push-right">|</span>
-        <span>February 27, 2019</span>
-    </p>
+    <?php
+    require 'includes/userdata.php';
 
-    <p>
-        <span class="trans-push-right">FB - 5 Shares</span>
+    $stockTransArr = getStockTrans($_SESSION['userEmail']);
+
+    foreach($stockTransArr as $sData) {
+        $transType = '';
+
+        if($sData['transType'] == 'B') {
+            $transType = "BUY";
+        } else if($sData['transType'] == 'S') {
+            $transType = "SELL";
+        }
+
+        echo '<p>
+        <span class="trans-push-right">'.$transType.'</span>
+        <span class="trans-push-right">('.$sData['symbol'].') - '.$sData['qty'].' Shares</span>
         <span class="trans-push-right">@</span>
-        <span class="trans-push-right">$98.02 ea. ($490.01)</span>
-        <span class="trans-push-right">|</span>
-        <span>March 13, 2019</span>
-    </p>
+        <span class="trans-push-right">'.$sData['totalCost'].' ('.$sData['indivCost'].' ea.)</span></p>';
+
+    }
+?>
 </div>
 
 <?php

@@ -87,6 +87,26 @@ function getStockQty($email, $symbol) {
     // return $currentStockCount;
 }
 
+function getStockTrans($email) {
+    require 'db.inc.php';
+
+    $userId = getUserId($email);
+
+    $sql = "SELECT * FROM stockTrans WHERE userId =".$userId." ORDER BY transDate ASC;";
+
+    $result = mysqli_query($connection, $sql);
+    $resultLength = mysqli_num_rows($result);
+
+    if($resultLength > 0) {
+        while($resultRow = mysqli_fetch_assoc($result)) {
+
+            $data[] = $resultRow;
+        }
+        return $data;
+    }
+    
+}
+
 function getUserBalance($email) {
     require 'db.inc.php';
 
@@ -170,5 +190,7 @@ SELECT * FROM table WHERE ID = id AND symbol = symbol
 
 //update record SQL
 UPDATE table SET contactname = value WHERE userId = 1
+
+
 
 */
