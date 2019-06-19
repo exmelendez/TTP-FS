@@ -10,22 +10,34 @@
 
     $stockTransArr = getStockTrans($_SESSION['userEmail']);
 
-    foreach($stockTransArr as $sData) {
-        $transType = '';
+    if($stockTransArr > 0) {
 
-        if($sData['transType'] == 'B') {
-            $transType = "BUY";
-        } else if($sData['transType'] == 'S') {
-            $transType = "SELL";
+        foreach($stockTransArr as $sData) {
+            $transType = '';
+            $sharesText = "Share";
+    
+            if($sData['transType'] == 'B') {
+                $transType = "BUY";
+            } else if($sData['transType'] == 'S') {
+                $transType = "SELL";
+            }
+
+            if($sData['qty'] > 1) {
+                $sharesText = 'Shares';
+            }
+    
+            echo '<p>
+            <span class="trans-push-right">'.$transType.'</span>
+            <span class="trans-push-right">('.$sData["symbol"].') - '.$sData["qty"].' '.$sharesText.'</span>
+            <span class="trans-push-right">@</span>
+            <span class="trans-push-right">'.$sData["totalCost"].' ('.$sData["indivCost"].' ea.)</span></p>';
         }
 
-        echo '<p>
-        <span class="trans-push-right">'.$transType.'</span>
-        <span class="trans-push-right">('.$sData['symbol'].') - '.$sData['qty'].' Shares</span>
-        <span class="trans-push-right">@</span>
-        <span class="trans-push-right">'.$sData['totalCost'].' ('.$sData['indivCost'].' ea.)</span></p>';
-
+    } else {
+        echo '<p style="text-align: center;">No transaction yet</p>';
     }
+
+    
 ?>
 </div>
 
