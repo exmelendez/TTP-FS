@@ -69,6 +69,61 @@ function deductFromBalance($email, $qty, $stockPrice) {
     recordMoneyTrans($userId, 'P', $deductAmount);
 }
 
+function getPortfolio($email) {
+    require 'db.inc.php';
+    require 'api.stockinfo.php';
+
+    $userId = getUserId($email);
+    $stocks = getUserStockList($userId);
+    // $initialStockCost = getStockIndvBuyCost($userId, $symbol);
+
+    if(count($stocks) > 0) {
+        foreach($stocks as $stock) {
+            $stockCurrentPrice = getStockData($stock['symbol'], "cost");
+            $stockCurrentTotalVal = $stockCurrentPrice * $stock['qty'];
+    
+            echo '
+            <p>
+            <span class="port-push-right">'.$stock["symbol"].' - '.$stock["qty"].' Shares</span>
+            <span>$'.$stockCurrentTotalVal.'</span>
+            </p>';
+        }
+    } else {
+        echo '<p style="text-align: center;">No stocks on account.</p>';
+    }
+}
+
+function getUserStockList($userId) {
+    require 'db.inc.php';
+
+    $sql = "SELECT * FROM stocks WHERE userId = $userId GROUP BY `symbol` ASC";
+
+    $result = mysqli_query($connection, $sql);
+    $resultLength = mysqli_num_rows($result);
+
+    if($resultLength > 0) {
+        while($resultRow = mysqli_fetch_assoc($result)) {
+
+            $data[] = $resultRow;
+        }
+        return $data;
+    }
+}
+
+function getStockIndvBuyCost($userId, $symbol) {
+    require 'db.inc.php';
+
+    $sql = "SELECT `indivCost` FROM `stockTrans` WHERE `userId` = $userId AND `symbol` = '$symbol' AND `transType` = 'B' group by `transDate` DESC";
+
+    $result = mysqli_query($connection, $sql);
+    $resultLength = mysqli_num_rows($result);
+
+    if($resultLength > 0) {
+        $resultRow = mysqli_fetch_assoc($result);
+        return $resultRow['indivCost'];
+    }
+}
+
 function getStockQty($email, $symbol) {
     require 'db.inc.php';
 
@@ -77,14 +132,11 @@ function getStockQty($email, $symbol) {
     $sql = "SELECT * FROM stocks WHERE userId =".$userId." AND symbol = '".$symbol."';";
     $result = mysqli_query($connection, $sql);
     $resultLength = mysqli_num_rows($result);
-    // $currentStockCount = 0;
 
     if($resultLength > 0) {
         $resultRow = mysqli_fetch_assoc($result);
         return $currentStockCount = $resultRow['qty'];
     }
-
-    // return $currentStockCount;
 }
 
 function getStockTrans($email) {
