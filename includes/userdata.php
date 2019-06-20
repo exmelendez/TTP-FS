@@ -75,17 +75,24 @@ function getPortfolio($email) {
 
     $userId = getUserId($email);
     $stocks = getUserStockList($userId);
-    // $initialStockCost = getStockIndvBuyCost($userId, $symbol);
+    $stockValColor = "color: grey;";
 
     if(count($stocks) > 0) {
         foreach($stocks as $stock) {
             $stockCurrentPrice = getStockData($stock['symbol'], "cost");
             $stockCurrentTotalVal = $stockCurrentPrice * $stock['qty'];
+            $stockOpenDayVal = getStockData($stock['symbol'], "openPrice");
+
+            if($stockCurrentPrice < $stockOpenDayVal) {
+                $stockValColor = "color: red;";
+            } else if ($stockCurrentPrice > $stockOpenDayVal) {
+                $stockValColor = "color: green;";
+            }
     
             echo '
             <p>
             <span class="port-push-right">'.$stock["symbol"].' - '.$stock["qty"].' Shares</span>
-            <span>$'.$stockCurrentTotalVal.'</span>
+            <span style="'.$stockValColor.'">$'.$stockCurrentTotalVal.'</span>
             </p>';
         }
     } else {
@@ -109,8 +116,8 @@ function getPortfolioValue($email) {
             $portValue += $stockCurrentTotalVal;
            
         }
-        echo '<H1>Portfolio <span>($'.$portValue.')</span></H1>';
     }
+    echo '<H1>Portfolio <span>($'.$portValue.')</span></H1>';
 }
 
 function getUserStockList($userId) {

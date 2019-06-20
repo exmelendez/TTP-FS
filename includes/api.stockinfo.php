@@ -15,6 +15,8 @@ function getStockData($stockSymbol, $infoType) {
                 return $data['symbol'];
             case "cost":
                 return $data['latestPrice'];
+            case "openPrice":
+                return $data['open'];
             case "exist":
                 return "found";
             default:
