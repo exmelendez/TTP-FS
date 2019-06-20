@@ -3,7 +3,13 @@
 ?>
 
 <div id="heading-div">
-    <H1>Portfolio <span>($58685.00)</span></H1>
+    <!-- <H1>Portfolio <span>($58685.00)</span></H1> -->
+
+    <?php
+        require 'includes/userdata.php';
+        getPortfolioValue($_SESSION['userEmail']);
+    ?>
+
 </div>
 
 
@@ -12,7 +18,7 @@
     <div id="current-stock-cont">
 
         <?php
-            require 'includes/userdata.php';
+            // require 'includes/userdata.php';
             getPortfolio($_SESSION['userEmail']);
         ?>
 

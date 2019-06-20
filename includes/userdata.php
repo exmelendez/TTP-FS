@@ -71,7 +71,7 @@ function deductFromBalance($email, $qty, $stockPrice) {
 
 function getPortfolio($email) {
     require 'db.inc.php';
-    require 'api.stockinfo.php';
+    // require 'api.stockinfo.php';
 
     $userId = getUserId($email);
     $stocks = getUserStockList($userId);
@@ -90,6 +90,26 @@ function getPortfolio($email) {
         }
     } else {
         echo '<p style="text-align: center;">No stocks on account.</p>';
+    }
+}
+
+function getPortfolioValue($email) {
+    require 'db.inc.php';
+    require 'api.stockinfo.php';
+
+    $portValue = getUserBalance($email);
+    $userId = getUserId($email);
+    $stocks = getUserStockList($userId);
+
+    if(count($stocks) > 0) {
+        foreach($stocks as $stock) {
+            $stockCurrentPrice = getStockData($stock['symbol'], "cost");
+            $stockCurrentTotalVal = $stockCurrentPrice * $stock['qty'];
+
+            $portValue += $stockCurrentTotalVal;
+           
+        }
+        echo '<H1>Portfolio <span>($'.$portValue.')</span></H1>';
     }
 }
 
