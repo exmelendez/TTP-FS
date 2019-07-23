@@ -23,31 +23,31 @@ Create a web based stock portfolio app using the free [IEX API](https://iextradi
 
 ### Screen Shots
 
-Login / Index.php
+**Login / Index.php**
 
 ![Index/Login Form](https://i.imgur.com/VAh1KSC.png)
 
-Register / Index.php
+**Register / Index.php**
 
 ![Index/Register Form](https://i.imgur.com/xL3ethJ.png)
 
-Portfolio.php
+**Portfolio.php**
 
 ![Portfolio Page](https://i.imgur.com/OFQkI7K.png)
 
-Stock Search - IEX API Call / Portfolio.php
+**Stock Search - IEX API Call / Portfolio.php**
 
 ![Portfolio/Stock Purchase Form](https://i.imgur.com/754BXJD.png)
 
-Stock Purchase Confirm - Pre PHP Submit / Portfolio.php
+**Stock Purchase Confirm - Pre PHP Submit / Portfolio.php**
 
 ![Stock Purchase Confirm](https://i.imgur.com/hvTPcvt.png)
 
-Transactions.php
+**Transactions.php**
 
 ![Transaction Page](https://i.imgur.com/NNgHsrd.png)
 
-Monetary Acct Transactions Table - Transactions.php
+**Monetary Acct Transactions Table - Transactions.php**
 
 ![Transaction Page](https://i.imgur.com/OycaSYl.png)
 
