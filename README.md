@@ -56,4 +56,4 @@ Create a web based stock portfolio app using the free [IEX API](https://iextradi
 Future updates may includes things like . . .
 * a way to sell stocks back
 * implementing JS Node or other method to remove API token from JS
-* displaying purchase modal to confirm purchase & prevent code fraudulent code/injection
+* displaying purchase modal to confirm purchase & prevent fraudulent code/injection
