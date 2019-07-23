@@ -250,17 +250,31 @@ class User extends Sql {
 
                 $stockOpenDayVal = $apiData['open'];
 
-                if($stockCurrentPrice < $stockOpenDayVal) {
-                    $sideBarColor = "status-down-color";
-                    $symbolValueColor = "val-color-status-down";
-                    $closePSpecial = '<i class="fas fa-long-arrow-alt-down"></i>
-                    </p>';
+                if($stockOpenDayVal == null) {
+                    $iexRTPrice = $apiData['iexRealtimePrice'];
 
-                } else if ($stockCurrentPrice > $stockOpenDayVal) {
-                    $sideBarColor = "status-up-color";
-                    $symbolValueColor = "val-color-status-up";
-                    $closePSpecial = '<i class="fas fa-long-arrow-alt-up"></i>
-                    </p>';
+                    if($stockCurrentPrice < $iexRTPrice) {
+                        $sideBarColor = "status-down-color";
+                        $symbolValueColor = "val-color-status-down";
+                        $closePSpecial = '<i class="fas fa-long-arrow-alt-down"></i></p>';
+
+                    } else if ($stockCurrentPrice > $iexRTPrice) {
+                        $sideBarColor = "status-up-color";
+                        $symbolValueColor = "val-color-status-up";
+                        $closePSpecial = '<i class="fas fa-long-arrow-alt-up"></i></p>';
+                    }
+
+                } else {
+                    if($stockCurrentPrice < $stockOpenDayVal) {
+                        $sideBarColor = "status-down-color";
+                        $symbolValueColor = "val-color-status-down";
+                        $closePSpecial = '<i class="fas fa-long-arrow-alt-down"></i></p>';
+    
+                    } else if ($stockCurrentPrice > $stockOpenDayVal) {
+                        $sideBarColor = "status-up-color";
+                        $symbolValueColor = "val-color-status-up";
+                        $closePSpecial = '<i class="fas fa-long-arrow-alt-up"></i></p>';
+                    }
                 }
 
                 if($stock['qty'] > 1) {
