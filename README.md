@@ -21,7 +21,9 @@ Create a web based stock portfolio app using the free [IEX API](https://iextradi
 * User color coded front end stock DIV(s) with red as low and green as high
 * User readable presentation of DB data, such as transactions
 
+## Screen Shots
+
 # NOTES/Updates
-Way to sell stocks back
-creating method/process to hide API token from search API
-Create confirm purchase modal to ensure purchase & prevent fraud code entry
+* Way to sell stocks back
+* creating method/process to hide API token from search API
+* Create confirm purchase modal to ensure purchase & prevent fraud code entry
