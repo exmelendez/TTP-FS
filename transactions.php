@@ -1,45 +1,68 @@
 <?php
     require "includes/nav-header.php";
+    
+    $dirPage = 'transactions.php';
+    $stkData = $user->getTransReport('stock');
+    $moneyData = $user->getTransReport('money');
 ?>
 
-<div id="trans-container">
-    <h1>Transactions</h1>
-
-    <?php
-    require 'includes/userdata.php';
-
-    $stockTransArr = getStockTrans($_SESSION['userEmail']);
-
-    if($stockTransArr > 0) {
-
-        foreach($stockTransArr as $sData) {
-            $transType = '';
-            $sharesText = "Share";
-    
-            if($sData['transType'] == 'B') {
-                $transType = "BUY";
-            } else if($sData['transType'] == 'S') {
-                $transType = "SELL";
-            }
-
-            if($sData['qty'] > 1) {
-                $sharesText = 'Shares';
-            }
-    
-            echo '<p>
-            <span class="trans-push-right">'.$transType.'</span>
-            <span class="trans-push-right">('.$sData["symbol"].') - '.$sData["qty"].' '.$sharesText.'</span>
-            <span class="trans-push-right">@</span>
-            <span class="trans-push-right">'.$sData["totalCost"].' ('.$sData["indivCost"].' ea.)</span></p>';
-        }
-
-    } else {
-        echo '<p style="text-align: center;">No transaction yet</p>';
-    }
-
-    
-?>
+<div id="trans-selector">
+    <span id="stk-btn">Stocks</span>
+    <span id="money-btn">Money</span>
 </div>
+
+<div id="stock-trans-tab">
+
+            <?php
+                if(sizeof($stkData) == 0) {
+                    echo "<h3 style=\"text-align:center;\">no stocks purchased yet</h3>";
+                } else {
+                    echo '
+                        <table class="table">
+                            <thead>
+                                <th>Type</th>
+                                <th>Symbol</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                            </thead>
+                        <tbody>
+                    ';
+
+                    foreach($stkData as $stockTransInfo) {
+                        echo $stockTransInfo;
+                    }
+
+                    echo '</tbody></table>';
+                }
+            ?>
+</div>
+
+<div id="money-trans-tab">
+            <?php
+                if(sizeof($moneyData) == 0) {
+                    echo "<h3 style=\"text-align:center;\">no monetary transactions yet made</h3>";
+                } else {
+                    echo '
+                        <table class="table">
+                            <thead>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </thead>
+                        <tbody>
+                    ';
+                    foreach($moneyData as $moneyTransInfo) {
+                        echo $moneyTransInfo;
+                    }
+
+                    echo '</tbody></table>';
+                }
+            ?>
+</div>
+
+<script src="js/trans.js"></script>
 
 <?php
     require "includes/footer.php";

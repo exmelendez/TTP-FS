@@ -1,5 +1,7 @@
-var modal = document.querySelector(".modal");
-var closeButton = document.querySelector(".close-button");
+var modal = document.getElementById("buy-modal");
+var errorModal = document.getElementById("balance-modal");
+var closeBuyButton = document.getElementById("buyCloseBtn");
+var closeErrButton = document.getElementById("errCloseBtn");
 
 const getUrlVars = () => {
     let vars = {};
@@ -13,17 +15,26 @@ const toggleModal = () => {
     modal.classList.toggle("show-modal")
 };
 
+const toggleEModal = () => {
+    errorModal.classList.toggle("show-modal")
+};
+
 const windowOnClick = (event) => {
     if (event.target === modal) {
         toggleModal();
+    } else if(event.target === errorModal) {
+        toggleEModal();
     }
 };
 
-closeButton.addEventListener("click", toggleModal);
+closeBuyButton.addEventListener("click", toggleModal);
+closeErrButton.addEventListener("click", toggleEModal);
 window.addEventListener("click", windowOnClick);
 
 if(getUrlVars()['purchase'] == "success") {
     toggleModal();
-} else {
-    console.log("nada");
+}
+
+if(getUrlVars()['error'] == "unavailablefunds") {
+    toggleEModal();
 }

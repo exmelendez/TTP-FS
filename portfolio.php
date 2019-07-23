@@ -1,76 +1,134 @@
 <?php
     require "includes/nav-header.php";
+    $dirPage = 'portfolio.php';
+
+    if(isset($_POST['symbol-inp']) && isset($_POST['stock-qty'])) {
+    
+        $symbol = $_POST['symbol-inp'];
+        $qtyInp = $_POST['stock-qty'];
+        $qty = intval($qtyInp);
+        $apiData = $user->getStockData($symbol);
+        $symbolCost = $apiData['latestPrice'];
+    
+        if($symbolCost != "symbol not found") {
+            strtoupper($symbol);
+    
+            if($user->ableToPurchase($qty, $symbolCost)) {
+
+                $user->purchaseStock($symbol, $qty, $symbolCost);
+                   
+                header("Location: " . $dirPage . "?purchase=success");
+                exit();
+    
+            } else {
+                header("Location: " . $dirPage . "?error=unavailablefunds");
+                exit();
+            }
+    
+        } else {
+            header("Location: " . $dirPage . "?error=symbolnotfound");
+            exit();
+        }
+    
+    }
 ?>
 
-<div id="heading-div">
-
-    <?php
-        require 'includes/userdata.php';
-        getPortfolioValue($_SESSION['userEmail']);
-    ?>
-</div>
-
-
-        
-<div id="portfolio-container">
-    <div id="current-stock-cont">
-
+    <p id="port-heading-val">Portfolio: $
         <?php
-            // require 'includes/userdata.php';
-            getPortfolio($_SESSION['userEmail']);
+            echo $user->getPortfolioReport('value');
         ?>
+    </p>
 
-    </div>
-
-    <div id="stock-buy-cont">
+    <main>
         <?php
-            $userBalance = getUserBalance($_SESSION['userEmail']);
-            $searchForm = '<form action="includes/buy-form-setup.php" method="post"><input type="hidden" name="user-email" value="'.$_SESSION['userEmail'].'" >
-            <input type="text" name="symbol-search-input" placeholder="Symbol">
-            <input id="stock-search-submit" name="symbol-search-btn" type="submit" value="Search">
-        </form>';
-            echo '<h2>Balance - $'.$userBalance.'</h2>';
 
-            if(isset($_GET['error'])) {
-                if($_GET['error'] == "emptyfield") {
-                    echo $searchForm.'<p>Symbol input is empty!</p>';
-                } else if($_GET['error'] == "symbolnotfound") {
-                    echo $searchForm.'<p>Symbol not found!</p>';
-                } else if($_GET['error'] == "unavailablefunds") {
-                    echo $searchForm.'<p>no funding available!</p>';
-                }
-            } else if(isset($_GET['symbolsearch']) == "success") {   
+            $portData = $user->getPortfolioReport('body');
 
-                echo '<div><form action="includes/stock-buy.php" method="post"><input type="hidden" name="user-email" value="'.$_SESSION['userEmail'].'" ><input type="text" name="stock-symbol" value="'.$_GET['symbol'].'" readonly>
-                    <input type="text" name="stock-price" value="'.$_GET['price'].'" readonly>
-                    <input type="number" pattern="\d+" name="stock-qty" placeholder="quantity"><div>
-                    <input id="cancel-buy-btn" type="submit" name="cancelBuyBtn" value="Cancel">
-                    <input id="submit-buy-btn" type="submit" name="buyBtn" value="Buy">
-                    </div>
-                </form>
-            </div>';
-
-            } else if(isset($_GET['purchase']) == "success") {
-                echo $searchForm;
-
+            if(sizeof($portData) == 0) {
+                echo "<h3>no stocks purchased yet</h3>";
             } else {
-                echo $searchForm;
+                foreach($portData as $stockInfo) {
+                    echo $stockInfo;
+                }
             }
         ?>
+    </main>
+
+    <hr style="margin-top: 2.3em; width: 97%;">
+
+    <div id="stock-buy-cont">
+        <h2>Purchase Stock</h2>
+        <h3>Buying Power - $
+            <?php
+                echo $user->getAcctBalance();
+            ?>
+        </h3>
+
+        <form id="multiphase" onsubmit="return false">
+            <div id="phase1" class="buy-step-div">
+            <input id="symbol-inp" name="symbol-inp" placeholder="Stock Symbol"><br>
+           
+            <span id="stat-msg" style="color: red;"></span>
+
+            <button onclick="processPhase1()">Search</button>
+            </div>
+
+            <div id="phase2" class="buy-step-div">
+            Symbol: <input id="symbol" name="symbol-inp" readonly><br>
+            Company: <input id="coName" name="co-inp" readonly><br>
+            Price: <input id="cost" name="cost" readonly><br>
+            Quantity: <input id="qty-inp" type="number" pattern="\d+" placeholder="Quantity" name="stock-qty">
+            <button class="cancel-btn" onclick="resetForm()">Cancel</button>
+            <button id="review-btn" onclick="processPhase2()">Review</button>
+            </div>
+
+            <div id="show_all_data">
+
+                <div class="buy-conf-report">
+                    <div>
+                        Company: <br/>
+                        Symbol: <br/>
+                        Price: <br />
+                        Quantity: <br />
+                        *Total: <br />
+                    </div>
+
+                    <div>
+                        <span class="report-space" id="display_co"></span><br>
+                        <span class="report-space" id="display_symbol"></span><br>
+                        <span class="report-space" id="display_price"></span><br>
+                        <span class="report-space" id="display_qty"></span><br>
+                        <span class="report-space" id="display_total"></span><br>
+                    </div>
+                </div>
+
+                <button class="cancel-btn" onclick="resetForm()">Cancel</button>
+                <button onclick="submitForm()">Purchase</button>
+            </div>
+
+        </form>
     </div>
 
-</div>
-
-<!-- purchase confirm Modal -->
-<div class="modal">
-    <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h1>You have successfully purchased!</h1>
-        <h2>Doesn't it feel good?</h2>
+    <!-- purchase confirm Modal -->
+    <div id="buy-modal" class="modal">
+        <div class="modal-content">
+            <span id="buyCloseBtn" class="close-button">&times;</span>
+            <h1>You just purchased!</h1>
+            <h2>Doesn't it feel good?</h2>
+        </div>
     </div>
-</div>
 
-<script src="js/buy-confirm.js"></script>
+    <!-- purchase error Modal -->
+    <div id="balance-modal" class="modal">
+        <div class="modal-content">
+            <span id="errCloseBtn" class="close-button">&times;</span>
+            <h1>Oopps!</h1>
+            <h2>You don't seem to have enough to make that purchase. In your account make a deposit to make a purchase.</h2>
+        </div>
+    </div>
+
+    <script src="js/ss-form-prep.js"></script>
+    <script src="js/buy-confirm.js"></script>
 
 <?php
     require "includes/footer.php";
