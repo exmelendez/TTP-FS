@@ -1,16 +1,16 @@
-#IEX/API Mock Web Portfolio Stock Site
+# IEX/API Mock Web Portfolio Stock Site
 
-##Goal
+## Goal
 Create a web based stock portfolio app using the free [IEX API](https://iextrading.com/developer/).
 
-##Languages/Technology Used
+## Languages/Technology Used
 * HTML
 * CSS
 * JavaScript
 * PHP
 * SQL/PHP MyAdmin
 
-##Feature List
+## Feature List
 * PHP OOP Implementation with a focus on DRY code
 * Ability to register account with name, email and password
 * JS Dynamic form used for either login or registration
@@ -21,7 +21,7 @@ Create a web based stock portfolio app using the free [IEX API](https://iextradi
 * User color coded front end stock DIV(s) with red as low and green as high
 * User readable presentation of DB data, such as transactions
 
-#NOTES/Updates
+# NOTES/Updates
 Way to sell stocks back
 creating method/process to hide API token from search API
 Create confirm purchase modal to ensure purchase & prevent fraud code entry
