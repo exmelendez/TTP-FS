@@ -59,11 +59,12 @@ When a user registers they are presented with a success message informing them t
 ![Successful Registration](https://i.imgur.com/nfU2LwE.png)
 
 ### Invalid Login
-If a user attempts to login with invalid credentials they are presented with a message on the index page
+If a user attempts to login with invalid credentials they are presented with a message on the index page.
+
 ![Invalid Login](https://i.imgur.com/s8CPMMg.png)
 
 ### Portfolio Empty Notification
-If a user has signed up or they have no made any purchases they will be presented with this message on both the portfolio page and the stock transaction page.
+If a user has signed up or they have not made any purchases they will be presented with this message on both the portfolio page and the stock transaction page.
 
 ![No Stks on Portfolio Page](https://i.imgur.com/m64R9nV.png)
 
@@ -71,15 +72,15 @@ If a user has signed up or they have no made any purchases they will be presente
 
 ### Invalid Stock Symbol
 When a user is attempting to purchase or view a stock's price if they type in a symbol that is not found or valid they will be notified of this error and the form will not allow them to proceed.
+
 ![Invalid Symbol/Not Found](https://i.imgur.com/e97IC3F.png)
 
 ### Modal Notifications
-When attempting to make a purchase a user will be presented with a popup modal in one of two instances. One being a succeful purchase, the other being when the balance cannot cover a purchase amount.
+When attempting to make a purchase a user will be presented with a popup modal in one of two instances. One being a successful purchase, the other being when the balance cannot cover a purchase amount.
 
 ![Successful Purchase Modal](https://i.imgur.com/cUdjzgO.png)
 
 ![Insufficient Funds Modal](https://i.imgur.com/MnbdE58.png)
-
 
 # NOTES/Updates
 
